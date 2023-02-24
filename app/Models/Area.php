@@ -15,7 +15,7 @@ class Area extends Model
         'name',
     ];
 
-    public function blogs() {
-        return $this->hasMany(Blog::class);
+    public function articles() {
+        return $this->hasMany(Article::class);
     }
 }

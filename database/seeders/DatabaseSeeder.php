@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         \App\Models\Area::factory(5)->create();
-        \App\Models\Blog::factory(10)->create();
+        \App\Models\Article::factory(10)->create();
     }
 }

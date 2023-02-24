@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AreaController;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthenticateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,17 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Area
-// Route::get('/areas', [AreaController::class, 'index']);
-// Route::post('/areas', [AreaController::class, 'store']);
-// Route::get('/areas/{id}', [AreaController::class, 'show']);
-// Route::put('/areas/{id}', [AreaController::class, 'update']);
-// Route::delete('/areas/{id}', [AreaController::class, 'destroy']);
-
 Route::apiResource('areas', AreaController::class);
 
-// Blog
-Route::get('/blogs', [BlogController::class, 'index']);
-Route::post('/blogs', [BlogController::class, 'store']);
-Route::get('/blogs/{id}', [BlogController::class, 'show']);
-Route::put('/blogs/{id}', [BlogController::class, 'update']);
-Route::delete('/blogs/{id}', [BlogController::class, 'destroy']);
+// Article
+Route::apiResource('articles', ArticleController::class);
+
+// Register
+Route::post('register', [AuthenticateController::class, 'register']);
