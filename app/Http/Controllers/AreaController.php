@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArea;
 use App\Http\Requests\UpdateArea;
+use App\Http\Resources\AreaResource;
 use App\Models\Area;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class AreaController extends Controller
      */
     public function index()
     {
-        return Area::all();
+        return AreaResource::collection(Area::all());
     }
 
     /**
@@ -22,12 +23,14 @@ class AreaController extends Controller
      */
     public function store(StoreArea $request)
     {
-        Area::create($request->all());
+        // Area::create($request->all());
+        // return response()->json([
+        //     'resp' => true,
+        //     'message' => 'Area agregada correctamente',
+        // ], 200);
 
-        return response()->json([
-            'resp' => true,
-            'message' => 'Area agregada correctamente',
-        ], 200);
+        return (new AreaResource(Area::create($request->all())))
+                ->additional(['message' => 'Area creada exitosamente.']);
     }
 
     /**
@@ -35,7 +38,8 @@ class AreaController extends Controller
      */
     public function show(string $id)
     {
-        return Area::find($id);
+        $area = Area::findOrFail($id);
+        return new AreaResource($area);
     }
 
     /**
@@ -43,16 +47,13 @@ class AreaController extends Controller
      */
     public function update(UpdateArea $request, string $id)
     {
-        $area = Area::find($id);
+        $area = Area::findOrFail($id);
         $area->update([
             'name' => $request->name
         ]);
 
-        return response()->json([
-            'resp' => true,
-            'message' => 'Area actualizada correctamente',
-        ], 200);
-        
+        return (new AreaResource($area))
+                ->additional(['message' => 'Area actualizada exitosamente.']);
     }
 
     /**
@@ -60,12 +61,10 @@ class AreaController extends Controller
      */
     public function destroy(string $id)
     {
-        $area = Area::find($id);
+        $area = Area::findOrFail($id);
         $area->delete();
 
-        return response()->json([
-            'resp' => true,
-            'message' => 'Area eliminada correctamente',
-        ], 200);
+        return (new AreaResource($area))
+                ->additional(['message' => 'Area eliminada correctamente.']);
     }
 }

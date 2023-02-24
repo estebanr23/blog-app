@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBlog;
 use App\Http\Requests\UpdateBlog;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        return Blog::all();
+        return new BlogResource(Blog::all());
     }
 
     /**
@@ -22,11 +23,14 @@ class BlogController extends Controller
      */
     public function store(StoreBlog $request)
     {
-        Blog::create($request->all());
-        return response()->json([
-            'resp' => true,
-            'message' => 'Blog agregado correctamente'
-        ]);
+        // Blog::create($request->all());
+        // return response()->json([
+        //     'resp' => true,
+        //     'message' => 'Blog agregado correctamente'
+        // ]);
+
+        return (new BlogResource(Blog::create($request->all())))
+                ->additional(['message' => 'Blog agregado exitosamente.']);
     }
 
     /**
@@ -34,7 +38,8 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
-        return Blog::findOrFail($id);
+        $blog = Blog::findOrFail($id);
+        return new BlogResource($blog);
     }
 
     /**
@@ -44,10 +49,9 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
         $blog->update($request->all());
-        return response()->json([
-            'resp' => true,
-            'message' => 'El blog se actualizo correctamente'
-        ]);
+
+        return (new BlogResource($blog))
+                ->additional(['message' => 'Blog actualizado correctamente.']);
     }
 
     /**
@@ -57,10 +61,9 @@ class BlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
         $blog->delete();
-        return response()->json([
-            'resp' => true,
-            'message' => 'El blog se elimino correctamente'
-        ]);
+       
+        return (new BlogResource($blog))
+                ->additional(['message' => 'Blog eliminado correctamente.']);
     }
 
 }

@@ -21,23 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Area
-Route::get('/areas', [AreaController::class, 'index']);
+// Route::get('/areas', [AreaController::class, 'index']);
+// Route::post('/areas', [AreaController::class, 'store']);
+// Route::get('/areas/{id}', [AreaController::class, 'show']);
+// Route::put('/areas/{id}', [AreaController::class, 'update']);
+// Route::delete('/areas/{id}', [AreaController::class, 'destroy']);
 
-Route::post('/areas', [AreaController::class, 'store']);
-
-Route::get('/areas/{id}', [AreaController::class, 'show']);
-
-Route::put('/areas/{id}', [AreaController::class, 'update']);
-
-Route::delete('/areas/{id}', [AreaController::class, 'destroy']);
+Route::apiResource('areas', AreaController::class);
 
 // Blog
 Route::get('/blogs', [BlogController::class, 'index']);
-
 Route::post('/blogs', [BlogController::class, 'store']);
-
 Route::get('/blogs/{id}', [BlogController::class, 'show']);
-
 Route::put('/blogs/{id}', [BlogController::class, 'update']);
-
 Route::delete('/blogs/{id}', [BlogController::class, 'destroy']);
