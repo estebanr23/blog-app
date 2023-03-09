@@ -22,10 +22,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Area
-Route::apiResource('areas', AreaController::class);
+// Route::apiResource('areas', AreaController::class);
 
 // Article
-Route::apiResource('articles', ArticleController::class);
+// Route::apiResource('articles', ArticleController::class);
 
-// Register
-Route::post('register', [AuthenticateController::class, 'register']);
+// Auth
+Route::post('auth/register', [AuthenticateController::class, 'register']);
+Route::post('auth/login', [AuthenticateController::class, 'login']);
+
+
+// Rutas con token
+Route::group(['middleware' => ['auth:sanctum']], function() {
+    Route::apiResource('areas', AreaController::class);
+    Route::apiResource('articles', ArticleController::class);
+    Route::post('auth/logout', [AuthenticateController::class, 'logout']);
+});

@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
@@ -69,6 +70,13 @@ class Handler extends ExceptionHandler
                 'resp' => false,
                 'error' => 'Error, la ruta no existe'
             ], 404);
+        }
+
+        if($exception instanceof AuthenticationException) {
+            return response()->json([
+                'res' => false,
+                'error' => 'No tiene los permisos para acceder a esta ruta'
+            ], 400);
         }
 
         return parent::render($request, $exception);
