@@ -33,6 +33,19 @@ class ArticleController extends Controller
                 ->additional(['message' => 'Article agregado exitosamente.']);
     }
 
+    /* public function storeImage(Request $request)
+    {
+        $path = $request->image->store('public/articles');
+
+        return (new ArticleResource(Article::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image_url' => $path,
+            'area_id' => $request->area_id,
+            'user_id' => $request->user_id
+        ])))->additional(['message' => 'Article agregado exitosamente.']);
+    } */
+
     /**
      * Display the specified resource.
      */
@@ -65,5 +78,4 @@ class ArticleController extends Controller
         return (new ArticleResource($article))
                 ->additional(['message' => 'Article eliminado correctamente.']);
     }
-
 }

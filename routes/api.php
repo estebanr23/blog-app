@@ -3,6 +3,7 @@
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthenticateController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,5 +37,6 @@ Route::post('auth/login', [AuthenticateController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('areas', AreaController::class);
     Route::apiResource('articles', ArticleController::class);
+    Route::post('images', [ImageController::class, 'store']);
     Route::post('auth/logout', [AuthenticateController::class, 'logout']);
 });

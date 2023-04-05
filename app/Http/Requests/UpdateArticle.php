@@ -24,7 +24,7 @@ class UpdateArticle extends FormRequest
         return [
             'title' => 'required|string|unique:articles,title,'.$this->id,
             'content' => 'required|string',
-            'image_url' => 'nullable|string',
+            'images' => 'nullable|string',
             'area_id' => 'required|integer',
             'user_id' => 'required|integer'
         ];

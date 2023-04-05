@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        'articles' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images'),
+            'url' => env('APP_URL').'/images-articles', // (Modificar .env) => http://blog-app.test
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*
@@ -70,7 +78,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('images-articles') => storage_path('app/images'),
     ],
 
 ];

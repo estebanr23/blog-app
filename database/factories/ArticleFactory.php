@@ -19,7 +19,7 @@ class ArticleFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'content' => fake()->text(100),
-            'image_url' => fake()->word(),
+            'images' => fake()->word(),
             'area_id' => 1,
             'user_id' => 1
         ];

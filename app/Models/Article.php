@@ -14,7 +14,7 @@ class Article extends Model
         'title',
         'content',
         'area_id',
-        'image_url',
+        'images',
         'user_id'
     ];
 
@@ -24,5 +24,9 @@ class Article extends Model
 
     public function user() {
         return $this->BelongsTo(User::class);
+    }
+
+    public function images() {
+        return $this->hasMany(Image::class);
     }
 }
