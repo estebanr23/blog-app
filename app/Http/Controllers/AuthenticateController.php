@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,8 +10,18 @@ use Illuminate\Validation\ValidationException;
 
 class AuthenticateController extends Controller
 {
+    public function index() {
+        return UserResource::collection(User::all());
+    }
+    
     public function register(Request $request) 
     {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required'
+        ]);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -29,16 +40,23 @@ class AuthenticateController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)) {
+        /* if(!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'message' => 'Las credenciales proporcionadas son incorrectas.'
+            ]);
+        } */
+
+        if(!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'ok' => false,
+                'errorMessage' => 'Las credenciales son incorrectas.'
             ]);
         }
 
         $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([
-            'res' => true,
+            'ok' => true,
             'token' => $token,
             'user' => $user,
         ], 200);
@@ -49,7 +67,7 @@ class AuthenticateController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'res' => true,
+            'ok' => true,
             'message' => 'Token eliminado correctamente.'
         ], 200);
     }
