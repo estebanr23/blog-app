@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateArea;
 use App\Http\Resources\AreaResource;
 use App\Models\Area;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AreaController extends Controller
 {

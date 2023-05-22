@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticle;
-use App\Http\Requests\UpdateArticle;
 use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -18,19 +17,29 @@ class ArticleController extends Controller
         return new ArticleResource(Article::all());
     }
 
+    public function articlesFromArea($area)
+    {
+        return new ArticleResource(Article::where('area_id', $area)->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreArticle $request)
+    public function store(Request $request)
     {
         // Article::create($request->all());
         // return response()->json([
-        //     'resp' => true,
+        //     'resp' =>  $request->content,
         //     'message' => 'Article agregado correctamente'
         // ]);
 
-        return (new ArticleResource(Article::create($request->all())))
-                ->additional(['message' => 'Article agregado exitosamente.']);
+        return (new ArticleResource(Article::create([
+            'title' => 'Titulo de articulo fijo',
+            'content' => $request->content,
+            'images' => 'nombre de imagen',
+            'area_id' => 5,
+            'user_id' => 1
+        ])))->additional(['message' => 'Article agregado exitosamente.']);
     }
 
     /* public function storeImage(Request $request)

@@ -36,6 +36,7 @@ Route::post('auth/login', [AuthenticateController::class, 'login']);
 // Rutas con token
 Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::apiResource('areas', AreaController::class);
+    Route::get('articles/area/{area}', [ArticleController::class, 'articlesFromArea']);
     Route::apiResource('articles', ArticleController::class);
     Route::post('images', [ImageController::class, 'store']);
     Route::post('auth/logout', [AuthenticateController::class, 'logout']);
